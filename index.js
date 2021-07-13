@@ -3,7 +3,10 @@ const MAX = 100;
 
 // --- state ---
 
-if (getState() === MAX) {
+let start = MIN;
+let end = MAX;
+
+if (getState() === end) {
     toggleDisable(true);
 }
 
@@ -14,10 +17,10 @@ function getState() {
 function setState(value) {
     localStorage.setItem('state', value);
 
-    if (value === MIN) {
+    if (value === start) {
         toggleDisable(false);
     }
-    if (value === MAX) {
+    if (value === end) {
         toggleDisable(true);
         outputResult('done');
     }
@@ -38,7 +41,7 @@ function FizzBuzz(item) {
     if (!getRemainder(item, 5)) {
         result += 'Buzz';
     }
-    if (!result) {
+    if (!result || !item) {
         result = item;
     }
 
@@ -74,11 +77,22 @@ function createCell(value) {
 }
 
 function processResult(item) {
-    const a = item - 1 > MIN ? FizzBuzz(item - 1) : null;
+    const a = item - 1 > start ? FizzBuzz(item - 1) : '';
     const b = FizzBuzz(item);
-    const c = item + 1 <= MAX ? FizzBuzz(item + 1) : null;
+    const c = item + 1 <= end ? FizzBuzz(item + 1) : '';
 
     outputResult(a, b, c);
+}
+
+function setError(value) {
+    const error = document.getElementById('error-block');
+    const text = document.createTextNode(value);
+    error.appendChild(text);
+}
+
+function removeError() {
+    const error = document.createElement('error-block');
+    error.innerHTML = '';
 }
 
 // --- events ---
@@ -96,7 +110,7 @@ function onCompleteClick() {
     const step = () => {
         processResult(state);
 
-        if (state < MAX) {
+        if (state < end) {
             step(++state);
         }
     }
@@ -106,7 +120,27 @@ function onCompleteClick() {
 }
 
 function onResetClick() {
-    setState(MIN);
+    setState(start);
     removeResult();
+}
+
+function onMinChange(value) {
+    if (value >= end) {
+        setError('error, the start number must be smaller than the end number');
+        return;
+    }
+
+    start = +value;
+    removeError();
+}
+
+function onMaxChange(value) {
+    if (value <= start) {
+        setError('error, the start number must be smaller than the end number');
+        return;
+    }
+
+    end = +value;
+    removeError();
 }
 

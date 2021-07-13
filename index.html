@@ -11,12 +11,26 @@
         <title>FizzBuzz</title>
     </head>
     <body>
-        <button id="next-button" onclick="onNextClick()">next</button>
-        <button id="complete-button" onclick="onCompleteClick()">complete the run</button>
-        <button id="reset-button" onclick="onResetClick()">reset</button>
-        <h2>output results:</h2>
-        <table id="output-results">
-        </table>
+        <div>
+            <label for="min">
+                min:
+                <input id="min" min="-10000" max="10000" value="0" onchange="onMinChange(value)" type="number">
+            </label>
+            <label for="max">
+                max:
+                <input id="max" min="-10000" max="10000" value="100" onchange="onMaxChange(value)" type="number">
+            </label>
+        </div>
+        <div id="error-block"></div>
+        <div>
+            <button id="next-button" onclick="onNextClick()">next</button>
+            <button id="complete-button" onclick="onCompleteClick()">complete the run</button>
+            <button id="reset-button" onclick="onResetClick()">reset</button>
+        </div>
+        <div>
+            <h2>output results:</h2>
+            <table id="output-results"></table>
+        </div>
 
         <script type='text/javascript' src="./FizzBuzz/index.js"></script>
     </body>

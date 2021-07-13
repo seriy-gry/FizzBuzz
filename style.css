@@ -2,3 +2,11 @@ td {
     width: 4em;
     border: 1px solid black;
 }
+
+div {
+    margin: 1em;
+}
+
+#error-block {
+    color: red;
+}
