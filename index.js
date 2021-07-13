@@ -1,4 +1,7 @@
-if (getState() === 100) {
+const MIN = 0;
+const MAX = 100;
+
+if (getState() === MAX) {
     toggleDisable(true);
 }
 
@@ -9,23 +12,18 @@ function getState() {
 function setState(value) {
     localStorage.setItem('state', value);
 
-    if (value === 1) {
+    if (value === MIN) {
         toggleDisable(false);
     }
-    if (value === 100) {
+    if (value === MAX) {
         toggleDisable(true);
+        console.log('done');
     }
 }
 
 function toggleDisable(value) {
     document.getElementById('next-button').disabled = value;
     document.getElementById('complete-button').disabled = value;
-}
-
-function FizzBuzz(N) {
-    for (let i = 1; i < N; i++) {
-        print(i);
-    }
 }
 
 function print(item) {
@@ -48,22 +46,28 @@ function getRemainder(item, number) {
 }
 
 function onNextClick()  {
-    const state = getState();
+    const state = getState() + 1;
 
     print(state);
-    setState(state + 1);
+    setState(state);
 }
 
 function onCompleteClick() {
-    let state = getState();
+    let state = getState() + 1;
 
-    while (state < 100) {
-        print(state++);
+    const step = () => {
+        print(state);
+
+        if (state < MAX) {
+            step(++state);
+        }
     }
+    step();
+
     setState(state);
 }
 
 function onResetClick() {
-    setState(1);
+    setState(MIN);
 }
 
