@@ -1,12 +1,18 @@
-let state = 1;
+if (getState() === 100) {
+    toggleDisable(true);
+}
+
+function getState() {
+    return +localStorage.getItem('state');
+}
 
 function setState(value) {
-    state = value;
+    localStorage.setItem('state', value);
 
-    if (state === 1) {
+    if (value === 1) {
         toggleDisable(false);
     }
-    if (state === 100) {
+    if (value === 100) {
         toggleDisable(true);
     }
 }
@@ -42,15 +48,19 @@ function getRemainder(item, number) {
 }
 
 function onNextClick()  {
+    const state = getState();
+
     print(state);
     setState(state + 1);
 }
 
 function onCompleteClick() {
+    let state = getState();
+
     while (state < 100) {
-        print(state);
-        setState(state + 1);
+        print(state++);
     }
+    setState(state);
 }
 
 function onResetClick() {
